@@ -1,6 +1,50 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Word Cookies Worksheet
+
+This is a small in-browser app that displays a worksheet for completing
+the Daily Puzzle and "butterfly" levels in the game Word Cookies!® by
+[BitMango](https://www.bitmango.com/). There may be other word games
+that could similarly be helped by this worksheet.
+
+This app doesn't solve the puzzle; that is, it won't give you words or
+help you cheat. It only helps you organize your own guesses as you play
+through the level.
+
+## How the Worksheet Helps
+
+Word Cookies!® presents a collection of letters and an empty list of
+words of various lengths. It's your job to assemble the available
+letters into dictionary words that fill in the blanks. The words are
+ordered by length and then alphabetically, with one exception: the
+biggest word (usually that uses all the available letters) is displayed
+at top of the screen.
+
+The Daily Puzzle and "butterfly" levels add an additional challenge: You
+need to guess a particular word, in a particular slot in the list, in
+order to get points. To solve these puzzles, it's not enough just to
+guess _any_ word in the puzzle. You need to guess the _exact_ word the
+game has randomly chosen on each move.
+
+We've developed a method to maximize our success with these puzzles: We
+start by writing down as many words as we can, sorted by number of
+letters and alphabetically, as in the game. We usually do this on a
+piece of paper or in a notes app. Then as we guess each word in the
+level, we write down next to it the number of the slot in which it
+appeared in order on the screen.
+
+This app helps facilitate that process by displaying a structured
+worksheet that organizes and sorts the words you add and displays your
+notations next to them.
+
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
+and supports its scripts and features. The following come from the
+Create React App template documentation.
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
 
 In the project directory, you can run:
 
@@ -37,32 +81,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
