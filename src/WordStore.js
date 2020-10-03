@@ -26,7 +26,7 @@ class WordStore {
             (a, b) =>
                 (a.word.length - b.word.length)
                 || (a.word.localeCompare(b.word))
-        );
+        ).map(W => ({...W}));
     }
 
     /**

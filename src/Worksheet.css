@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 
-.worksheet-header {
+.worksheet-content {
   background-color: navajowhite;
   min-height: 100vh;
   display: flex;
@@ -20,4 +20,19 @@
 
 .worksheet-link {
   color: #61dafb;
+}
+
+
+.wordlist {
+  display: table;
+}
+
+.word {
+  display: table-row;
+}
+
+.word span {
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 10px;
 }
