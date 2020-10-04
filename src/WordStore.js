@@ -35,7 +35,7 @@ class WordStore {
      */
     addWords(...words) {
         for (let word of words) {
-            word = word.toLocaleUpperCase();
+            word = word.trim().toLocaleUpperCase();
             let data = this._findWord(word);
             if (data === undefined) {
                 this.#wordsData.push({word});
@@ -49,7 +49,7 @@ class WordStore {
      */
     removeWords(...words) {
         for (let word of words) {
-            word = word.toLocaleUpperCase();
+            word = word.trim().toLocaleUpperCase();
             this.#wordsData = this.#wordsData.filter((W) => (W.word !== word));
         }
     }
@@ -64,7 +64,7 @@ class WordStore {
      * @param {string|number} tag
      */
     tagWord(word, tag) {
-        word = word.toLocaleUpperCase();
+        word = word.trim().toLocaleUpperCase();
         let data = this._findWord(word);
         if (data === undefined) {
             this.#wordsData.push({word, tag});
@@ -82,7 +82,7 @@ class WordStore {
      * @param {string} word
      */
     untagWord(word) {
-        word = word.toLocaleUpperCase();
+        word = word.trim().toLocaleUpperCase();
         let data = this._findWord(word);
         if (data === undefined) {
             this.addWords(word);

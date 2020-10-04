@@ -89,3 +89,14 @@ test('words are capitalized in all operations', () => {
     expect(wd.words).toEqual(expectedWords('ABC'));
 });
 
+test('trim spaces from words in all operations', () => {
+    let wd = new WordStore();
+    wd.addWords(' ABC ', ' DEF ');
+    expect(wd.words).toEqual(expectedWords('ABC', 'DEF'));
+    wd.removeWords(' DEF ');
+    expect(wd.words).toEqual(expectedWords('ABC'));
+    wd.tagWord(' ABC ', 1);
+    expect(wd.words).toEqual(expectedWords({word: 'ABC', tag: 1}));
+    wd.untagWord(' ABC ');
+    expect(wd.words).toEqual(expectedWords('ABC'));
+});
