@@ -79,6 +79,14 @@ class WordStore extends EventTarget {
     }
 
     /**
+     * Clears all words from the database.
+     */
+    clear() {
+        this.#wordsData = [];
+        this.dispatchEvent(new Event('dataChanged'));
+    }
+
+    /**
      * Tags a word.
      *
      * If the word does not yet exist in the database,

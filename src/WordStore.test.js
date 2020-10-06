@@ -51,6 +51,13 @@ test('remove multiple words', () => {
     expect(wd.words).toEqual(expectedWords('DEF'));
 });
 
+test('clear all words', () => {
+    const wd = new WordStore();
+    wd.addWords('ABC', 'DEF', 'XYZ');
+    wd.clear();
+    expect(wd.words).toEqual([]);
+});
+
 test('tag a word', () => {
     const wd = new WordStore();
     wd.addWords('ABC');
@@ -134,6 +141,10 @@ test('changing data dispatches dataChanged event', () => {
 
         listener.mockReset();
         wd.untagWord('ABC');
+        expect(listener).toHaveBeenCalled();
+
+        listener.mockReset();
+        wd.clear();
         expect(listener).toHaveBeenCalled();
     } finally {
         wd.removeEventListener('dataChanged', listener);
