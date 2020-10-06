@@ -54,6 +54,11 @@ function Worksheet({model}) {
                                 model.untagWord(word);
                             }
                             setWords(model.words);
+                        } else {
+                            if (tag.toLowerCase() === 'clear') {
+                                model.clear();
+                                setWords(model.words);
+                            }
                         }
                     }}
                 />
