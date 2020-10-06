@@ -6,8 +6,17 @@
 
 /**
  * The data model for the Word Cookies Worksheet.
+ *
+ * This object is an {@link EventTarget}, and whenever its data may have
+ * changed, it dispatches a 'dataChanged` event. User code can listen for
+ * this event to trigger updates of the UI or of persistent storage. Note
+ * that it will send this event whenever the data <em>may</em> have
+ * changed, even if it didn't. Certain operations, such as adding a word
+ * that already exists or removing a word that doesn't, will cause a
+ * 'dataChanged' event, even though the underlying data has not actually
+ * changed.
  */
-class WordStore {
+class WordStore extends EventTarget {
     // An array of WordData, sorted by word length and then alphabetically.
     #wordsData = [];
 
@@ -55,6 +64,7 @@ class WordStore {
                 this._insert({word});
             }
         }
+        this.dispatchEvent(new Event('dataChanged'));
     }
 
     /**
@@ -65,6 +75,7 @@ class WordStore {
         for (const word of this._validated(words)) {
             this.#wordsData = this.#wordsData.filter((W) => (W.word !== word));
         }
+        this.dispatchEvent(new Event('dataChanged'));
     }
 
     /**
@@ -84,6 +95,7 @@ class WordStore {
         } else {
             data.tag = tag;
         }
+        this.dispatchEvent(new Event('dataChanged'));
     }
 
     /**
@@ -102,6 +114,7 @@ class WordStore {
         } else {
             delete data.tag;
         }
+        this.dispatchEvent(new Event('dataChanged'));
     }
 }
 

@@ -107,3 +107,35 @@ test('compiled word data does not refer to internal data structures', () => {
     wd.words[0].tag = 'bad!';
     expect(wd.words).toEqual(expectedWords('ABC'));
 });
+
+test('changing data dispatches dataChanged event', () => {
+    const wd = new WordStore();
+
+    const listener = jest.fn();
+    wd.addEventListener('dataChanged', listener);
+
+    // EventTarget does not support subclassing as of jsdom 16.2.0
+    // (used by @testing-libary/jest-dom), but we can fake it out by
+    // setting the target's _document to a non-null object.
+    wd._document = {};
+
+    try {
+        listener.mockReset();
+        wd.addWords('ABC', 'DEF');
+        expect(listener).toHaveBeenCalled();
+
+        listener.mockReset();
+        wd.removeWords('DEF');
+        expect(listener).toHaveBeenCalled();
+
+        listener.mockReset();
+        wd.tagWord('ABC', 1);
+        expect(listener).toHaveBeenCalled();
+
+        listener.mockReset();
+        wd.untagWord('ABC');
+        expect(listener).toHaveBeenCalled();
+    } finally {
+        wd.removeEventListener('dataChanged', listener);
+    }
+});
