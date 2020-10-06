@@ -1,32 +1,48 @@
 /**
+ * @typedef {Object} WordData a structure containing all the information about a word
+ * @property {string} word
+ * @property {string|number} [tag]
+ */
+
+/**
  * The data model for the Word Cookies Worksheet.
  */
 class WordStore {
+    // An array of WordData, sorted by word length and then alphabetically.
     #wordsData = [];
 
-    _findWord(word) {
+    // Validates an array of word strings, returning the validated words.
+    _validated(words) {
+        return words.map(word => word.trim().toLocaleUpperCase());
+    }
+
+    // Finds the WordData for a given word in the database.
+    _find(word) {
         return this.#wordsData.find((W) => (W.word === word));
     }
 
-    /**
-     * @typedef {Object} WordData a structure containing all the information about a word
-     * @property {string} word
-     * @property {string|number} [tag]
-     */
+    // Inserts a new WordData in the #wordsData.
+    _insert(newWordData) {
+        this.#wordsData.push(newWordData);
+        this.#wordsData = this.#wordsData.sort(
+            (a, b) =>
+                (a.word.length - b.word.length)
+                || (a.word.localeCompare(b.word))
+        );
+    }
 
     /**
      * Gets the compiled list of word data.
      *
      * The words are sorted first by length and then alphabetically.
      *
+     * The data returned is cloned from any internal data structures,
+     * so unique objects are returned each time this accessor is called.
+     *
      * @returns {WordData[]} sorted list of word structures
      */
     get words() {
-        return this.#wordsData.sort(
-            (a, b) =>
-                (a.word.length - b.word.length)
-                || (a.word.localeCompare(b.word))
-        ).map(W => ({...W}));
+        return this.#wordsData.map(W => ({...W}));
     }
 
     /**
@@ -34,11 +50,9 @@ class WordStore {
      * @param {string} words
      */
     addWords(...words) {
-        for (let word of words) {
-            word = word.trim().toLocaleUpperCase();
-            let data = this._findWord(word);
-            if (data === undefined) {
-                this.#wordsData.push({word});
+        for (const word of this._validated(words)) {
+            if (this._find(word) === undefined) {
+                this._insert({word});
             }
         }
     }
@@ -48,8 +62,7 @@ class WordStore {
      * @param {string} words
      */
     removeWords(...words) {
-        for (let word of words) {
-            word = word.trim().toLocaleUpperCase();
+        for (const word of this._validated(words)) {
             this.#wordsData = this.#wordsData.filter((W) => (W.word !== word));
         }
     }
@@ -64,10 +77,10 @@ class WordStore {
      * @param {string|number} tag
      */
     tagWord(word, tag) {
-        word = word.trim().toLocaleUpperCase();
-        let data = this._findWord(word);
+        [word] = this._validated([word]);
+        const data = this._find(word);
         if (data === undefined) {
-            this.#wordsData.push({word, tag});
+            this._insert({word, tag});
         } else {
             data.tag = tag;
         }
@@ -82,10 +95,10 @@ class WordStore {
      * @param {string} word
      */
     untagWord(word) {
-        word = word.trim().toLocaleUpperCase();
-        let data = this._findWord(word);
+        [word] = this._validated([word]);
+        const data = this._find(word);
         if (data === undefined) {
-            this.addWords(word);
+            this._insert({word});
         } else {
             delete data.tag;
         }
