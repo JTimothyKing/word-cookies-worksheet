@@ -12,6 +12,24 @@ test('new data model has no words', () => {
     expect(wd.words).toEqual([]);
 });
 
+test('initialize data model with copy of words data', () => {
+    const initialWordsData = [
+        {word: 'ABC'},
+        {word: 'DEF', tag: 1},
+        {word: 'XYZ', tag: 'TAG'},
+    ];
+
+    // Deep copy: even if the code under test modifies initialWordsData,
+    // expectedWordsData will remain intact.
+    const expectedWordsData = initialWordsData.map(W => ({...W}));
+
+    const wd = new WordStore(initialWordsData);
+    expect(wd.words).toEqual(expectedWordsData);
+
+    wd.addWords('QWERTY');
+    expect(initialWordsData).toEqual(expectedWordsData);
+});
+
 test('add a word', () => {
     const wd = new WordStore();
     wd.addWords('ABC');

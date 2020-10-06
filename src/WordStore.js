@@ -41,6 +41,18 @@ class WordStore extends EventTarget {
     }
 
     /**
+     * Construct a words database.
+     * @param {WordData[]} [initialWordsData]
+     */
+    constructor(initialWordsData) {
+        super();
+
+        if (initialWordsData) {
+            this.#wordsData = initialWordsData.map(W => ({...W}));
+        }
+    }
+
+    /**
      * Gets the compiled list of word data.
      *
      * The words are sorted first by length and then alphabetically.
